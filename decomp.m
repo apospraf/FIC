@@ -1,9 +1,12 @@
 clear finalImg
 
-y = wgn(size(rImg,1)/dS,size(rImg,1)/dS,2);
-iter = 10;
+
+y = wgn(size(rImg,1)/dS,size(rImg,1)/dS,2); %white noise as the initial image
+iter = 5; %number of IFS application
+
+%finalImg as new input in each iteration, downsampled
 for ite=1:iter
-    dBlocks = zeros(N, N, size(y,1)^2/N^2);
+    dBlocks = zeros(N, N, size(y,1)^2/N^2); 
     newrBlocks = zeros(N, N, size(rImg,1)^2/N^2);
 
     b = 1;
@@ -15,7 +18,7 @@ for ite=1:iter
     end
 
     newrBlock = zeros(N,N,size(rImg,1)^2/N^2);
-
+    
     for j=1:length(bestTrans)
         switch bestTrans(j)
             case 1
@@ -37,6 +40,7 @@ for ite=1:iter
         end
     end
 
+    % recreation of the final image threw each newrBlock
     row = 1;
     finalImg = zeros(size(rImg));
     col = 1;
